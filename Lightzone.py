@@ -15,7 +15,7 @@ Modified by
 Masahiro Kitagawa
 
 Version:
-0.8c Made it compatible both Windows and macOS
+0.8c Made it compatible with Windows, macOS, and Linux
 0.8b Made it specific for Lightzone
 0.8 Made it specific to Nik Collection
 0.7 fixed file save bug where all files were png regardless of extension
