@@ -11,8 +11,11 @@ Partha Bagchi
 Modified by Martin Pohl
 Modified by
 Stefano Azzi
+Modified by
+Masahiro Kitagawa
 
 Version:
+0.8c Made it compatible both Windows and macOS
 0.8b Made it specific for Lightzone
 0.8 Made it specific to Nik Collection
 0.7 fixed file save bug where all files were png regardless of extension
@@ -87,7 +90,14 @@ def plugin_main( image, drawable, visible ):
   pdb.gimp_file_save(tempimage, tempdrawable, tempfilename, tempfilename)
 
   # Build command line call
-  command = "\"C:\\Program Files\\LightZone\\LightZone.exe\"" + " \"" + tempfilename + "\""
+  platform = sys.platform
+  if platform.startswith('win')
+    progtorun = "os.environ["ProgramW6432"] + \\LightZone.exe\""
+  elif platform.startswith('darwin'):
+    progtorun = "open -W -a \"LightZone\""
+  elif platform.startswith('linux'):
+    progtorun = "\"lightzone\""
+  command = progtorun + " \"" + tempfilename + "\""
   args = shlex.split(command)
 
   # Invoke external command
@@ -98,7 +108,7 @@ def plugin_main( image, drawable, visible ):
 
   # put it as a new layer in the opened image
   try:
-	Lightzonefile = os.path.expanduser( "~/AppData/Local/Temp/ShellOutTempFile_lzn.jpg")	
+	Lightzonefile = os.path.join(tempfile.gettempdir(), "ShellOutTempFile_lzn.jpg")	
 	copyfile( Lightzonefile, tempfilename )
 	newlayer2 = pdb.gimp_file_load_layer(tempimage, tempfilename)
   except:
