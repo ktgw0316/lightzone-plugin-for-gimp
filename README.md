@@ -1,0 +1,1 @@
+# lightzone-plugin-for-gimp
