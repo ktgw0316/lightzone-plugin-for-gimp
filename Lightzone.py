@@ -91,7 +91,7 @@ def plugin_main( image, drawable, visible ):
 
   # Build command line call
   if sys.platform.startswith('win'):
-    progtorun = os.environ["ProgramW6432"] + "\\LightZone.exe\""
+    progtorun = "\"" + os.environ["ProgramW6432"] + "\\LightZone\\LightZone.exe\""
   elif sys.platform.startswith('darwin'):
     progtorun = "open -W -a \"LightZone\""
   elif sys.platform.startswith('linux'):
