@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 '''
-LightZoneLZ.py
-call Lightzone 2 passing the active layer as a temp file. 
+Lightzone.py
+call LightZone passing the active layer as a temp file. 
 
 Author:
 Rob Antonishen
@@ -20,8 +20,8 @@ Version:
 0.8 Made it specific to Nik Collection
 0.7 fixed file save bug where all files were png regardless of extension
 0.6 modified to allow for a returned layer that is a different size 
-   than the saved layer for
-  0.5 file extension parameter in program list.
+    than the saved layer for
+0.5 file extension parameter in program list.
 0.4 modified to support many optional programs.
 
 this script is modelled after the mm extern LabCurves trace plugin 
@@ -90,12 +90,11 @@ def plugin_main( image, drawable, visible ):
   pdb.gimp_file_save(tempimage, tempdrawable, tempfilename, tempfilename)
 
   # Build command line call
-  platform = sys.platform
-  if platform.startswith('win')
-    progtorun = "os.environ["ProgramW6432"] + \\LightZone.exe\""
-  elif platform.startswith('darwin'):
+  if sys.platform.startswith('win'):
+    progtorun = os.environ["ProgramW6432"] + "\\LightZone.exe\""
+  elif sys.platform.startswith('darwin'):
     progtorun = "open -W -a \"LightZone\""
-  elif platform.startswith('linux'):
+  elif sys.platform.startswith('linux'):
     progtorun = "\"lightzone\""
   command = progtorun + " \"" + tempfilename + "\""
   args = shlex.split(command)
