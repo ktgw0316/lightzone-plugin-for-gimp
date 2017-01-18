@@ -16,7 +16,7 @@ Masahiro Kitagawa
 
 Version:
 0.8c Made it compatible with Windows, macOS, and Linux
-0.8b Made it specific for Lightzone
+0.8b Made it specific for LightZone
 0.8 Made it specific to Nik Collection
 0.7 fixed file save bug where all files were png regardless of extension
 0.6 modified to allow for a returned layer that is a different size 
@@ -64,7 +64,7 @@ def plugin_main( image, drawable, visible ):
     temp = pdb.gimp_image_get_active_drawable(image)
   else:
     # Get the current visible
-    temp = pdb.gimp_layer_new_from_visible(image, image, "Lightzone")
+    temp = pdb.gimp_layer_new_from_visible(image, image, "LightZone")
     image.add_layer(temp, 0)
 
   buffer = pdb.gimp_edit_named_copy(temp, "ShellOutTemp")
@@ -93,22 +93,22 @@ def plugin_main( image, drawable, visible ):
   if sys.platform.startswith('win'):
     progtorun = "\"" + os.environ["ProgramW6432"] + "\\LightZone\\LightZone.exe\""
   elif sys.platform.startswith('darwin'):
-    progtorun = "open -W -a \"LightZone\""
+    progtorun = "open -W -a \"LightZone.app\""
   elif sys.platform.startswith('linux'):
     progtorun = "\"lightzone\""
   command = progtorun + " \"" + tempfilename + "\""
   args = shlex.split(command)
 
   # Invoke external command
-  pdb.gimp_progress_set_text ("calling Lightzone...")
+  pdb.gimp_progress_set_text ("calling LightZone...")
   pdb.gimp_progress_pulse()
   child = subprocess.Popen(args, shell=False)
   child.communicate()
 
   # put it as a new layer in the opened image
   try:
-	Lightzonefile = os.path.join(tempfile.gettempdir(), "ShellOutTempFile_lzn.jpg")	
-	copyfile( Lightzonefile, tempfilename )
+	lightzonefile = os.path.join(tempfile.gettempdir(), "ShellOutTempFile_lzn.jpg")	
+	copyfile( lightzonefile, tempfilename )
 	newlayer2 = pdb.gimp_file_load_layer(tempimage, tempfilename)
   except:
     RuntimeError
@@ -137,7 +137,7 @@ def plugin_main( image, drawable, visible ):
   # cleanup
   os.remove(tempfilename)  # delete the temporary file
   gimp.delete(tempimage)   # delete the temporary image
-  os.remove( Lightzonefile )     # delete the locally created LZ file
+  os.remove( lightzonefile )     # delete the locally created LZ file
   # Note the new image is dirty in Gimp and the user will be asked to save before closing.
   pdb.gimp_image_undo_group_end(image)
   gimp.displays_flush()
@@ -145,12 +145,12 @@ def plugin_main( image, drawable, visible ):
 
 register(
         "python_fu_Lightzone",
-        "Call Lightzone",
-        "Call Lightzone",
+        "Call LightZone",
+        "Call LightZone",
         "Rob Antonishen",
         "Copyright 2011 Rob Antonishen",
         "2011",
-        "<Image>/Filters/Photography/Lightzone",
+        "<Image>/Filters/Photography/LightZone",
         "RGB*, GRAY*", 
         [ (PF_RADIO, "visible", "Layer:", 1, (("new from visible", 1),("current layer",0))),
         ],
